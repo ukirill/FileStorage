@@ -1,0 +1,16 @@
+﻿@model WebApp.Models.DocumentModel
+<tr>
+    <td>
+        @Html.DisplayFor(Model => Model.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(Model => Model.OriginalFileName)
+    </td>
+    <td>
+        @Html.DisplayFor(Model => Model.Date)
+    </td>
+    <td>
+        @Html.ActionLink("Скачать", "Download", new { path = Model.Path, originalFileName = Model.OriginalFileName })
+    </td>
+</tr>
+

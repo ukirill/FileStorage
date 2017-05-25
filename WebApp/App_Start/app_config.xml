@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <connection_string>Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Projects\FileStorage\DBModel\App_Data\FileStorage.mdf;Integrated Security=True;MultipleActiveResultSets=True</connection_string>
+  <nhb_config_path>C:\Projects\FileStorage\DBModel\hibernate.cfg.xml</nhb_config_path>
+  <storage_path>C:\Projects\FileStorage\WebApp\App_Data</storage_path>
+</configuration>

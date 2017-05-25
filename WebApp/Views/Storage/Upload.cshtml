@@ -1,0 +1,30 @@
+﻿@model WebApp.Models.UploadModel
+
+@{
+    ViewBag.Title = "Загрузка документа";
+}
+
+<h2>Загрузить документ</h2>
+
+
+@using (Html.BeginForm("Upload", "Storage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.LabelFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    <br />
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+        @Html.TextBox("file", "", new { @class = "file", type = "file" })
+        <br />
+        <input type="submit" value="Загрузить" class="btn btn-primary" />
+}
+<br/>
+<div>
+    @Html.ActionLink("К списку документов", "Documents")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

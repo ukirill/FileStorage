@@ -1,0 +1,26 @@
+﻿@model WebApp.Models.StorageModel
+
+
+<link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table" id="docsTable">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Имя файла</th>
+                    <th>Дата</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.DocumentsList)
+                {
+                    @Html.Partial("_Document", item)
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
