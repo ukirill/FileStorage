@@ -198,6 +198,8 @@
     <Content Include="Views\Storage\Documents.cshtml" />
     <Content Include="Views\Storage\_Document.cshtml" />
     <Content Include="Views\Storage\_DocumentsListContainer.cshtml" />
+    <Content Include="Views\Shared\_NotConfig.cshtml" />
+    <Content Include="Views\Shared\_Welcome.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

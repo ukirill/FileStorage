@@ -1,9 +1,6 @@
 ﻿using DBModel.Models;
 using DBModel.Repositories;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebApp.Models;
@@ -57,12 +54,10 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = UserRepository.GetAll().FirstOrDefault(u => u.Email == model.Email);
-
+                model.Email = model.Email.ToLower();
+                User user = UserRepository.GetUserByEmail(model.Email);
                 if (user == null)
                 {
-                    // создаем нового пользователя
-                    model.Email = model.Email.ToLower();
                     user = new User()
                     {
                         Email = model.Email,
@@ -71,7 +66,7 @@ namespace WebApp.Controllers
                         Password = model.Password,
                     };
                     UserRepository.Create(user);
-                    // если пользователь удачно добавлен в бд
+
                     FormsAuthentication.SetAuthCookie(model.Email, true);
                     return RedirectToAction("Index", "Home");
                 }

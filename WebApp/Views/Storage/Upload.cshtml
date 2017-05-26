@@ -12,20 +12,17 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.AntiForgeryToken()
 
-    @Html.LabelFor(model => model.Name)
-    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    @Html.LabelFor(Model => Model.Name)
+    @Html.ValidationMessageFor(Model => Model.Name, "", new { @class = "text-danger" })
     <br />
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(Model => Model.Name, new { htmlAttributes = new { @class = "form-control" } })
         <br />
         @Html.TextBox("file", "", new { @class = "file", type = "file" })
         <br />
-        <input type="submit" value="Загрузить" class="btn btn-primary" />
+        <input type="submit" value="Загрузить" class="btn btn-warning" />
+        @Html.ActionLink("К списку документов", "Documents",null, new { @class = "btn btn-primary" })
         <p>@ViewBag.Message</p>
 }
-<br/>
-<div>
-    @Html.ActionLink("К списку документов", "Documents")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

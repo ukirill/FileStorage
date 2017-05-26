@@ -82,9 +82,7 @@
     <Compile Include="Repositories\NHDocumentRepository.cs" />
     <Compile Include="Repositories\NHUserRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Storage\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="App_Data\FileStorage.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

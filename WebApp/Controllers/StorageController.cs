@@ -17,13 +17,10 @@ namespace WebApp.Controllers
         #region private 
         private NHDocumentRepository DocumentRepository { get; set; }
         private NHUserRepository UserRepository { get; set; }
-        //private User CurrentUser { get; set; }
-
         private IEnumerable<Document> SearchResult { get; set; }
-
         private IEnumerable<DocumentModel> GetDocsViewList(string q)
         {
-            var user = UserRepository.GetUserByEmail(User.Identity.Name);
+            var user = UserRepository.GetUserWithDocs(User.Identity.Name);
             IEnumerable<Document> docsList;
             if (!string.IsNullOrWhiteSpace(q))
             {
@@ -34,7 +31,7 @@ namespace WebApp.Controllers
             var documents = docsList.Select(d => new DocumentModel()
             {
                 Name = d.Name != null && d.Name.Length > 30
-                            ? d.Name.Substring(0, 29) + "..."
+                            ? $"{d.Name.Substring(0, 30)}..."
                             : d.Name,
                 OriginalFileName = d.OriginalFileName,
                 Date = d.Date,
@@ -70,21 +67,19 @@ namespace WebApp.Controllers
             if (file == null)
             {
                 ModelState.AddModelError("", "Выберите файл");
-                return View();            
-            }
-            if (user != null)
-            {
-                var document = new Document()
-                {
-                    OriginalFileName = Path.GetFileName(file.FileName),
-                    Name = model.Name,
-                    Date = DateTime.Now,
-                    Author = user
-                };
-                if (DocumentRepository.CreateWithFile(document, file, СonfigHelper.ConnectionString, СonfigHelper.StoragePath))
-                    ViewBag.Message = "Документ загружен";
                 return View();
-                // return RedirectToAction("Documents");
+            }
+            var document = new Document()
+            {
+                OriginalFileName = Path.GetFileName(file.FileName),
+                Name = model.Name,
+                Date = DateTime.Now,
+                Author = user
+            };
+            if (DocumentRepository.CreateWithFile(document, file, СonfigHelper.ConnectionString, СonfigHelper.StoragePath))
+            {
+                ViewBag.Message = "Документ загружен";
+                return View();
             }
             else
             {

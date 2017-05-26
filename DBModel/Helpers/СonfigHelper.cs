@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NHibernate;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Web.Security;
@@ -27,8 +28,6 @@ namespace DBModel.Helpers
                 if (!string.IsNullOrEmpty(InitializationScriptPath))
                     ExecuteInitializeScript(InitializationScriptPath);
                 Configured = true;
-
-                FormsAuthentication.SignOut();
             }
             catch { Configured = false; }
         }
@@ -36,6 +35,7 @@ namespace DBModel.Helpers
         private static void ExecuteInitializeScript(string scriptPath)
         {
             string script = System.IO.File.ReadAllText(scriptPath);
+            ISession sess = NHHelper.OpenSession();
             using (var conn = new SqlConnection(ConnectionString))
             {
                 IEnumerable<string> commandStrings =
@@ -52,6 +52,7 @@ namespace DBModel.Helpers
                     }
                 }
             }
+            sess.Close();
         }
     }
 }

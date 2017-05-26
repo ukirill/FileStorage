@@ -10,7 +10,10 @@
         @Html.DisplayFor(Model => Model.Date)
     </td>
     <td>
-        @Html.ActionLink("Скачать", "Download", new { path = Model.Path, originalFileName = Model.OriginalFileName })
+        <a href="@Url.Action("Download", new { path = Model.Path, originalFileName = Model.OriginalFileName })" class="btn btn-warning">
+            <span class="glyphicon glyphicon-download-alt pull" aria-hidden="true"></span>
+        </a>
+        @*@Html.ActionLink("Скачать", "Download", new { path = Model.Path, originalFileName = Model.OriginalFileName })*@
     </td>
 </tr>
 

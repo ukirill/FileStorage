@@ -19,17 +19,21 @@ namespace DBModel.Repositories
                                                 string saveDirectory
                                                 )
         {
-            try
+            using (var conn = new SqlConnection(connectionString))
+            using (var command = new SqlCommand("InsertDoc", conn)
             {
-                using (var conn = new SqlConnection(connectionString))
-                using (var command = new SqlCommand("InsertDoc", conn)
+                CommandType = CommandType.StoredProcedure
+            })
+            {
+                if (file.ContentLength > 0)
                 {
-                    CommandType = CommandType.StoredProcedure
-                })
-                {
-                    if (file.ContentLength > 0)
+                    conn.Open();
+                    var transaction = conn.BeginTransaction();
+
+                    command.Connection = conn;
+                    command.Transaction = transaction;
+                    try
                     {
-                        conn.Open();
                         command.Parameters.AddWithValue("@Name", entity.Name);
                         command.Parameters.AddWithValue("@OriginalFN", entity.OriginalFileName);
                         command.Parameters.AddWithValue("@Date", entity.Date);
@@ -37,7 +41,9 @@ namespace DBModel.Repositories
 
                         SqlParameter retval = command.Parameters.Add("@Newid", SqlDbType.UniqueIdentifier);
                         retval.Direction = ParameterDirection.Output;
+
                         command.ExecuteNonQuery();
+
                         var docId = retval.Value;
 
                         Directory.CreateDirectory(Path.Combine(saveDirectory, entity.Author.Id.ToString()));
@@ -48,17 +54,26 @@ namespace DBModel.Repositories
                         {
                             file.InputStream.CopyTo(fs);
                         }
+                        transaction.Commit();
                         return true;
                     }
-
-                    else
-                        return false;
+                    catch
+                    {
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    }
                 }
-            }
-            catch
-            {
-                throw;
+                else
+                    return false;
             }
         }
     }
 }
+

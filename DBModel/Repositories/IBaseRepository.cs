@@ -14,8 +14,5 @@ namespace DBModel.Repositories
 
         void Delete(T entity);
 
-        IQueryable<T> GetAll();
-
-        //IQueryable<T> GetById()
     }
 }

@@ -62,14 +62,6 @@ namespace DBModel.Repositories
             }
         }
 
-        public IQueryable<User> GetAll()
-        {
-            IQueryable<User> result;
-            ISession session = NHHelper.OpenSession();
-            result = session.Query<User>();
-            return result;
-        }
-
         public void Update(User entity)
         {
             using (ISession session = NHHelper.OpenSession())
@@ -96,7 +88,23 @@ namespace DBModel.Repositories
 
         public User GetUserByEmail(string email)
         {
-            return GetAll().FirstOrDefault(u => u.Email == email);
+            User result;
+            using (ISession session = NHHelper.OpenSession())
+            {
+                result = session.Query<User>().FirstOrDefault<User>(u => u.Email == email);
+            }
+            return result;
+        }
+
+        public User GetUserWithDocs(string email)
+        {
+            User result;
+            using (ISession session = NHHelper.OpenSession())
+            {
+                result = session.Query<User>().FirstOrDefault<User>(u => u.Email == email);
+                NHibernateUtil.Initialize(result.Documents);
+            }
+            return result;
         }
     }
 }

@@ -91,16 +91,6 @@ namespace DBModel.Repositories
             return result;
         }
 
-        public IQueryable<Document> GetAll()
-        {
-            IQueryable<Document> result;
-            using (ISession session = NHHelper.OpenSession())
-            {
-                result = session.Query<Document>();
-            }
-            return result; ;
-        }
-
         public void Update(Document entity)
         {
             using (ISession session = NHHelper.OpenSession())
