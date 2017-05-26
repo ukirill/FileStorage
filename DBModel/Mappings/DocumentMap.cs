@@ -16,8 +16,10 @@ namespace DBModel.Mappings
                 .Column("Id")
                 .GeneratedBy.GuidComb();
 
-            Map(d => d.Name);
-            Map(d => d.OriginalFileName);
+            Map(d => d.Name)
+                .Length(4000);
+            Map(d => d.OriginalFileName)
+                .Length(4000);
             Map(u => u.Date);
 
             References(d => d.Author);

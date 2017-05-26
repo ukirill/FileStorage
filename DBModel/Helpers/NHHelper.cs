@@ -1,16 +1,7 @@
-﻿using DBModel.Helpers;
-using DBModel.Models;
+﻿using DBModel.Models;
 using FluentNHibernate.Cfg;
 using NHibernate;
 using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace DBModel.Helpers

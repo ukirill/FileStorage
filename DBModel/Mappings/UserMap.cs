@@ -1,10 +1,5 @@
 ﻿using DBModel.Models;
 using FluentNHibernate.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DBModel.Mappings
 {
@@ -12,7 +7,9 @@ namespace DBModel.Mappings
     {
         public UserMap()
         {
-            Id(u => u.Id);
+            Id(u => u.Id)
+                .Column("Id")
+                .GeneratedBy.GuidComb();
 
             Map(u => u.FirstName);
             Map(u => u.LastName);

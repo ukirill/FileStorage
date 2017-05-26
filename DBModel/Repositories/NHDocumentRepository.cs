@@ -62,7 +62,7 @@ namespace DBModel.Repositories
                                 )
         {
             var res = DBDocumentOperation.CreateUsingProcedure(entity, file, connectionString, saveDirectory);
-            return false;
+            return res;
         }
 
         public void Delete(Document entity)

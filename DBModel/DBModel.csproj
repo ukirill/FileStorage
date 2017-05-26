@@ -93,6 +93,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>FileStorage.mdf</DependentUpon>
     </Content>
+    <Content Include="App_Data\fill_users.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

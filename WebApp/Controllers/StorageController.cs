@@ -1,7 +1,6 @@
 ﻿using DBModel.Helpers;
 using DBModel.Models;
 using DBModel.Repositories;
-using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,6 +67,11 @@ namespace WebApp.Controllers
         {
 
             var user = UserRepository.GetUserByEmail(User.Identity.Name);
+            if (file == null)
+            {
+                ModelState.AddModelError("", "Выберите файл");
+                return View();            
+            }
             if (user != null)
             {
                 var document = new Document()
@@ -78,12 +82,13 @@ namespace WebApp.Controllers
                     Author = user
                 };
                 if (DocumentRepository.CreateWithFile(document, file, СonfigHelper.ConnectionString, СonfigHelper.StoragePath))
-                    ViewBag.Message = "File Uploaded Successfully!!";
-                return RedirectToAction("Documents");
+                    ViewBag.Message = "Документ загружен";
+                return View();
+                // return RedirectToAction("Documents");
             }
             else
             {
-                ViewBag.Message = "File upload failed!!";
+                ViewBag.Message = "При загрузке произошла ошибка";
                 return View();
             }
         }
